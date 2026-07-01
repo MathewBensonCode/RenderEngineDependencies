@@ -1,0 +1,30 @@
+# CMake Dependency Build of ZEngine for Windows
+#
+name: Windows Build Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  cmake-build:
+    name: cmake-build-windows
+    runs-on: windows-2025
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: CMake Configure
+        run: cmake -B ../builds -DCMAKE_INSTALL_PREFIX=install -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF -DASSIMP_WARNINGS_AS_ERRORS=OFF -DSPIRV_WERROR=OFF -DFMT_INSTALL=ON -DSPDLOG_INSTALL=ON -DENTT_INSTALL=ON
+
+      - name: CMake Build
+        run: cmake --build builds --parallel
+
+      - name: CMake Install
+        run: mkdir install && cmake --install builds --prefix install
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: Build-Windows
+          if-no-files-found: error
+          path: install

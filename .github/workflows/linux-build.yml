@@ -1,0 +1,35 @@
+name: ZEngine Cmake Linux Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  Linux-Build:
+    name: cmake-build-linux
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Update the list of packages
+        run: sudo apt-get update
+
+      - name: Install Dependencies
+        run: sudo apt-get install cmake software-properties-common gcc g++ 
+
+      - name: CMake Configure
+        run: cmake -B builds -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF -DASSIMP_WARNINGS_AS_ERRORS=OFF -DSPIRV_WERROR=OFF -DFMT_INSTALL=ON -DSPDLOG_INSTALL=ON -DENTT_INSTALL=ON
+
+      - name: CMake Build
+        run: cmake --build builds 
+
+      - name: CMake Install
+        run: mkdir install && cmake --install builds --prefix linux_install
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: Build-linux
+          if-no-files-found: error
+          path: linux_install

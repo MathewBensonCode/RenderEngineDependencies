@@ -1,0 +1,13 @@
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  windows:
+    uses: ./.github/workflows/windows-build.yml
+
+  macOS:
+    uses: ./.github/workflows/macOS-build.yml
+
+  linux:
+    uses: ./.github/workflows/linux-build.yml
