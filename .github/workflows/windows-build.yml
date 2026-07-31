@@ -2,6 +2,9 @@
 #
 name: Windows Build Workflow
 
+env:
+  CMAKE_INSTALL_PREFIX: "${{github.workspace}}/install"
+
 on:
   workflow_call:
 
@@ -14,13 +17,16 @@ jobs:
         uses: actions/checkout@v6
 
       - name: CMake Configure
-        run: cmake -B ../builds -DCMAKE_INSTALL_PREFIX=install -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF -DASSIMP_WARNINGS_AS_ERRORS=OFF -DSPIRV_WERROR=OFF -DFMT_INSTALL=ON -DSPDLOG_INSTALL=ON -DENTT_INSTALL=ON
+        run: cmake -B builds -DENTT_INSTALL=ON -DFMT_INSTALL=ON -DGLSLANG_ENABLE_INSTALL=ON -DINSTALL_PROJECT=ON -DJSON_Install=ON -DSPDLOG_INSTALL=ON -DSPIRV_HEADERS_ENABLE_INSTALL=ON -DUUID_ENABLE_INSTALL=ON -DVMA_ENABLE_INSTALL=ON -DVULKAN_HEADERS_ENABLE_INSTALL=ON -DYAML_CPP_INSTALL=ON -DCLI11_SINGLE_FILE=ON -DCLI11_FULL_INSTALL=ON
+        shell: pwsh
 
       - name: CMake Build
-        run: cmake --build builds --parallel
+        run: cmake --build builds --parallel --config Release
+        shell: pwsh
 
       - name: CMake Install
-        run: mkdir install && cmake --install builds --prefix install
+        run: mkdir install && cmake --install builds --prefix install --config Release
+        shell: pwsh
 
       - name: Publish Build Artifacts
         uses: actions/upload-artifact@v6
