@@ -18,13 +18,13 @@ jobs:
         uses: actions/checkout@v6
       
       - name: CMake Configure
-        run: cmake -B builds_${{matrix.architecture}} -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF -DASSIMP_WARNINGS_AS_ERRORS=OFF -DSPIRV_WERROR=OFF -DFMT_INSTALL=ON -DSPDLOG_INSTALL=ON -DENTT_INSTALL=ON
+        run: cmake -B builds_${{matrix.architecture}} -DCMAKE_INSTALL_PREFIX=install_${{matrix.architecture}} -DCMAKE_CONFIGURATION_TYPES="Release"
 
       - name: CMake Build
-        run: cmake --build builds_${{matrix.architecture}} --parallel
+        run: cmake --build builds_${{matrix.architecture}} --parallel --config Release
 
       - name: CMake Install
-        run: mkdir install_${{matrix.architecture}} && cmake --install builds-${{matrix.architecture}} --prefix install_${{matrix.architecture}}  
+        run: mkdir install_${{matrix.architecture}} && cmake --install builds-${{matrix.architecture}} --prefix install_${{matrix.architecture}} --config Release
 
       - name: Publish Build Artifacts
         uses: actions/upload-artifact@v6
