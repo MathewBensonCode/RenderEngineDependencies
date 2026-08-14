@@ -167,6 +167,17 @@ FetchContent_Declare(miniz
     GIT_SHALLOW TRUE
 )
 
+FetchContent_Declare(fastgltf
+    GIT_REPOSITORY https://github.com/spnda/fastgltf.git
+    GIT_SHALLOW    TRUE
+    GIT_TAG        v0.9.0
+)
+
+FetchContent_Declare(TracyClient
+    GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+    GIT_SHALLOW TRUE
+    GIT_TAG v0.13.1
+)
 
 set(CACHE BUILD_EXTERNAL TYPE BOOL OFF)
 
@@ -223,6 +234,8 @@ set(CACHE CLI11_SINGLE_FILE TYPE BOOL ON)
 set(CACHE CLI11_FULL_INSTALL TYPE BOOL ON)
 set(CACHE INSTALL_PROJECT TYPE BOOL ON) #miniz install
 
+set(CACHE FASTGLTF_ENABLE_INSTALL TYPE BOOL ON) 
+
 FetchContent_MakeAvailable(
   fmt
   VulkanHeaders
@@ -247,6 +260,8 @@ FetchContent_MakeAvailable(
   glslang
   GTest
   miniz
+  fastgltf
+  TracyClient
   )
 
 
@@ -276,6 +291,8 @@ target_link_libraries(External_libs
          GPUOpen::VulkanMemoryAllocator 
          nlohmann_json::nlohmann_json
         CLI11::CLI11
+        fastgltf::fastgltf
+        Tracy::TracyClient
 )
 
 set_target_properties(External_libs PROPERTIES INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)

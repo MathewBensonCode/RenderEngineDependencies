@@ -22,7 +22,7 @@ jobs:
         run: sudo apt-get install cmake software-properties-common gcc g++ libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libasound2-dev libgl1-mesa-dev libpulse-dev libdbus-1-dev libx11-dev libxcursor-dev libxext-dev libxi-dev libxinerama-dev libxrandr-dev libxss-dev libxt-dev libxxf86vm-dev libxkbcommon-dev
 
       - name: CMake Configure
-        run: cmake -G Ninja -B builds -DENTT_INSTALL=ON -DFMT_INSTALL=ON -DGLSLANG_ENABLE_INSTALL=ON -DINSTALL_PROJECT=ON -DJSON_Install=ON -DSPDLOG_INSTALL=ON -DSPIRV_HEADERS_ENABLE_INSTALL=ON -DUUID_ENABLE_INSTALL=ON -DVMA_ENABLE_INSTALL=ON -DVULKAN_HEADERS_ENABLE_INSTALL=ON -DYAML_CPP_INSTALL=ON -DCLI11_SINGLE_FILE=ON -DCLI11_FULL_INSTALL=ON
+        run: cmake -G Ninja -B builds -DENTT_INSTALL=ON -DFMT_INSTALL=ON -DGLSLANG_ENABLE_INSTALL=ON -DINSTALL_PROJECT=ON -DJSON_Install=ON -DSPDLOG_INSTALL=ON -DSPIRV_HEADERS_ENABLE_INSTALL=ON -DUUID_ENABLE_INSTALL=ON -DVMA_ENABLE_INSTALL=ON -DVULKAN_HEADERS_ENABLE_INSTALL=ON -DYAML_CPP_INSTALL=ON -DCLI11_SINGLE_FILE=ON -DCLI11_FULL_INSTALL=ON -DBUILD_SHARED_LIBS=ON 
 
       - name: CMake Build
         run: cmake --build builds 
